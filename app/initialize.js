@@ -26,7 +26,7 @@ const colors = [
   'greenyellow',
   'lightcyan',
   'lightyellow',
-  'white',    
+  'white',
 ];
 
 let tape$;
@@ -34,7 +34,7 @@ let dataPos = 0;
 let colorPos = 0;
 const INTERVAL_COLOR = 50;
 const INTERVAL_IMAGE = 50;
-const SIMULATE_TAPE = false;
+const SIMULATE_TAPE = true;
 
 const calcY = (offset) => {
   return ((offset >> 11) << 6)  // sector start
@@ -68,7 +68,7 @@ const drawImage = (bytes) => {
 
   bytes.forEach((data) => {
     pixmap[calcX(dataPos) >> 3][calcY(dataPos)] = data;
-    
+
     for(var currentByte=0; currentByte < 8; currentByte++) {
       const x = calcX(dataPos) + currentByte;
       const y = calcY(dataPos);
@@ -139,19 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
     pixmap[i] = [];
   }
 
-  fetch('./GlugGlug.scr')  
+  fetch('./GlugGlug.scr')
     .then(function(response) {
       var reader = response.body.getReader();
 
       reader.read().then(function(result) {
         imageData = result.value.slice(0, 6144);
         colorData = result.value.slice(6144);
-  
+
         drawImageStart();
       });
-    })  
-    .catch(function(err) {  
-      console.log('Fetch Error :-S', err);  
+    })
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
     });
 
   console.log('Initialized app');
